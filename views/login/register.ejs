@@ -1,0 +1,33 @@
+<% layout('./layout/boilerplate.ejs') %>
+
+<section class="cover grid-center">
+    <article class="container login-container flex-row rounded-1">
+        <form class="login-form" action="/login/register" method="POST">
+            <h3>Register New User</h3>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div>
+                <label for="role" style="display: inline;">Role:</label>
+                <select name="role" required>
+                    <option value="">Choose Role</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div>
+                <button type="submit" class="button button-primary">Submit</button>
+            </div>
+        </form>
+        <img class="rounded-50 icon-lg" src="images/icon.ico" />
+    </article>
+</section>

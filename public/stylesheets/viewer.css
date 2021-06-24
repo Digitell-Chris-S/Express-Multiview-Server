@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+:root{
+    --background-color:#ff6933;
+    --secondary-color: #0a86db;
+    --accent-color:#0667a8;
+    --accent-hover:#eeb004;
+    --tertiary-color:#73c100;
+    --font-stack: "Open Sans", arial, sans-serief
+}
+
+/* Root Components */
+/* ---------------------------------------------- */
+body{
+    margin:0px;
+    padding:0px;
+    font-family: var(--font-stack);
+}
+
+main{
+    display: flex;
+}
+
+/* Class Components */
+/* ---------------------------------------------- */
+
+/* Setting Panel */
+.settings-container{
+    display: flex;
+    justify-content: space-between;
+}
+.setting-banner{
+    display: flex;
+    align-items: center;
+}
+
+/* Header */
+.banner-container{
+    height:4em;
+    background-color: var(--secondary-color);
+}
+.banner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Sidebar Panel */
+.sidebar-container{
+    position: absolute;
+    top:8em;
+    left:0;
+        
+    width:25em;
+    
+    transition: .5s;
+
+    background-color: var(--background-color);
+}
+.sidebar-subcontainer{
+    padding:.25em;
+    margin:.25em;
+    border:2px solid #fff;
+    border-radius:1em;
+}
+
+/* Sidebar Encoder Sections */
+.encoder-container{
+
+}
+
+/* Frames */
+.frame-container{
+    display: flex;
+    flex-direction: column;
+    margin:1em;
+}
+.frame-header{
+    display: flex;
+    align-items: center;
+    padding:.25em;
+
+    border-radius: 1em 1em 0em 0em;
+    background-color: var(--secondary-color);
+}
+
+/* Placeholder */
+.placeholder{
+    display: flex;
+    flex-direction: column;
+    margin:1em;
+    color:rgb(204, 204, 204);
+    border: 2px dashed rgb(204, 204, 204);
+}
+
+/* Dynamic Classes */
+/* ---------------------------------------------- */
+.msg,
+.overlay{
+    display: none;
+}
+
+.collapsed-height{
+    overflow:hidden;
+    max-height:0px;
+}
+.collapsed-width{
+    overflow: hidden;
+    /* width: 0px; */
+    max-width: 0px;
+}
+.expanded-height{
+    max-height: 100% !important;
+}
+.expanded-width{
+    max-width: 100% !important;
+    /* width:100% !important; */
+}
+.hidden{
+    display: none;
+}
+
+
+/* Utilities */
+/* ---------------------------------------------- */
+
+/* Typeography */
+.center-text{
+    text-align: center;
+}
+.version{
+    padding:1em;
+}
+/* Buttons */
+.btn{
+    cursor: pointer;
+}
+.menu-btn{
+    height:2.5em;
+}
+.enc-btn{
+    margin:.2em;
+    border-color:white;
+    color:#fff;
+    background-color: var(--accent-color);
+}
+.remove-btn{
+    color:#fff;
+}
+.remove-btn:hover{
+    border-color:white;
+    background-color: red;
+}
+
+/* Padding */
+.p-1{
+    padding:1em;
+}
+.p-2{
+    padding:2em;
+}
+.p-3{
+    padding:3em;
+}
+
+/* Borders */
+.rounded-1{
+    border-radius: 1em;
+}
+.rounded-2{
+    border-radius: 2em;
+}
+.rounded-3{
+    border-radius: 3em;
+}
+.rounded-50{
+    border-radius: 50%;
+}
+
+/* icons */
+.icon-small{
+    height:1.5em;
+    margin:.3em;
+}
+.icon-med{
+    height: 4em;
+}
+
+/* Animation classes */
+/* ---------------------------------------------- */
+.slide-in-left {
+	-webkit-animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+/* Keyframes */
+/* ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation slide-in-left
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-in-left {
+    0% {
+      -webkit-transform: translateX(-1000px);
+              transform: translateX(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-left {
+    0% {
+      -webkit-transform: translateX(-1000px);
+              transform: translateX(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  

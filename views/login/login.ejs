@@ -1,0 +1,21 @@
+<% layout('./layout/boilerplate.ejs') %>
+
+<section class="cover grid-center">
+    <article class="container login-container flex-row rounded-1">
+        <form class="login-form" action="/login" method="POST">
+            <h3>Login</h3>
+            <div>
+                <label for="">Username</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div>
+                <label for="">Password</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div>
+                <button type="submit" class="button button-primary">Submit</button>
+            </div>
+        </form>
+        <img class="rounded-50 icon-lg" src="images/icon.ico" />
+    </article>
+</section>

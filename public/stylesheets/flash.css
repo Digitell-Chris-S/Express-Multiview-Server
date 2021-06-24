@@ -1,0 +1,28 @@
+.flash-container{
+    height: 5em;
+}
+
+.flash{
+    position: relative;
+    top:1.25em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin:0 3em;
+    font-size: large;
+}
+
+
+/* Colors */
+.flash-success{
+    background-color: #73c100;
+}
+
+.flash-info{
+    background-color: #ffbc02;
+}
+
+.flash-error{
+    color:white;
+    background-color: rgb(195, 0, 0);
+}
