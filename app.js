@@ -6,6 +6,7 @@ var logger = require('morgan');
 const ejs = require('ejs');
 const ejsMate = require('ejs-mate');
 const flash = require('connect-flash')
+const methodOverride = require('method-override')
 
 // Authentication Stuff
 const session = require('express-session')
@@ -52,8 +53,11 @@ passport.deserializeUser(User.deserializeUser());
 // -----------------Flash Messages---------------
 app.use(flash())
 
+// Make these pieces of data availible on every request (if they exist)
 app.use((req, res, next) => {
+  // Currently logged in user
   res.locals.currentUser = req.user;
+  // Flash messages
   res.locals.info = req.flash('info');
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
@@ -67,10 +71,10 @@ app.engine('ejs', ejsMate)
 
 // Middleware
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'))
 
 // ------Allow Cross Origin Access Control Header----------------
 app.use(function(req, res, next) {
@@ -85,7 +89,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/viewer', require('./routes/viewer'));
-app.use('/login', require('./routes/login'))
+app.use('/login', require('./routes/login'));
+app.use('/settings', require('./routes/settings'));
 
 // API Routes
 app.use('/computers', require('./routes/computers'));

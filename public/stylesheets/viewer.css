@@ -13,7 +13,7 @@
 body{
     margin:0px;
     padding:0px;
-    font-family: var(--font-stack);
+    /* font-family: var(--font-stack); */
 }
 
 main{
@@ -22,6 +22,12 @@ main{
 
 /* Class Components */
 /* ---------------------------------------------- */
+/* General Layout */
+.flex-row{
+    display: flex;
+    align-items: center;
+}
+
 
 /* Setting Panel */
 .settings-container{
@@ -31,10 +37,15 @@ main{
 .setting-banner{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding:1em;
 }
 
 /* Header */
 .banner-container{
+    display: grid;
+    place-items: center;
     height:4em;
     background-color: var(--secondary-color);
 }
@@ -42,6 +53,7 @@ main{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
 
 /* Sidebar Panel */
@@ -150,6 +162,9 @@ main{
     border-color:white;
     background-color: red;
 }
+.settings-btn{
+    margin:0px 1em !important;    
+}
 
 /* Padding */
 .p-1{
@@ -160,6 +175,11 @@ main{
 }
 .p-3{
     padding:3em;
+}
+
+/* Margin */
+mb-0{
+    margin-bottom: 0px !important;
 }
 
 /* Borders */

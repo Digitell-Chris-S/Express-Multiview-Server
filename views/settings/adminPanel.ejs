@@ -1,0 +1,64 @@
+<% layout('./layout/boilerplate.ejs') %>
+<link rel="stylesheet" href="/stylesheets/settings.css">
+
+<nav id="setting-nav" class="setting-nav">
+    <img id="collapse-btn" class="mb-1" src="/icons/leftArrow.svg" />
+    <div class="flex-row mb-1">
+        <form action="/login/logout" method="POST" class="mb-0">
+            <button class="mb-0 button-primary" type="submit">Logout</button>
+        </form>
+    </div>
+    <a class="button button-primary mb-0" href="/viewer">Back to Viewer</a>
+</nav>
+
+<!-- Temporary nav button -->
+<img id="nav-btn" class="nav-btn" src="/icons/menu.svg"/>
+
+<section class="dashboard-container">
+    <article class="settings-menu">
+        <h1 class="center-text header">Settings</h1>
+        <div class="setting-tabs-container mb-1" id="tab-container">
+            <a class="tab tab-selected">Desktops</a>
+            <a class="tab">Laptops</a>
+            <a class="tab">Users</a>
+        </div>
+    </article>
+    <div class="encoder-container">
+        <article id="desktops-container" class="encoder-section ma-1 p-1 rounded-1">
+            <h3 class="center-text">Desktops</h3>
+            <div class="center-text">
+                <label>Filter Desktops</label>
+                <input type="text" id="desktop-search">
+            </div>
+            <div class="auto-grid">
+                <% desktops.forEach(comp => { %>
+                    <a class="button enc-btn" href="/settings/desktops/<%= comp._id %>"><%= comp.name %></a>
+                <% }); %> 
+            </div>
+        </article>
+        <article  id="laptops-container" class="encoder-section ma-1 p-1 rounded-1">
+            <h3 class="center-text">Laptops</h3>
+            <div class="center-text">
+                <label>Filter Laptops</label>
+                <input type="text" id="laptop-search">
+            </div>
+            <div class="auto-grid">
+                <% laptops.forEach(comp => { %>
+                    <a class="button enc-btn" href="/settings/laptops/<%= comp._id %>"><%= comp.name %> </a>
+                <% }); %> 
+            </div>
+        </article>
+        <article  id="users-container" class="encoder-section ma-1 p-1 rounded-1">
+            <h3 class="center-text">Users</h3>
+            <div class="auto-grid">
+                <% users.forEach(u => { %>
+                    <div class="user-card flex-row-centered">
+                        <h5><%= u.username  %> </h5>
+                        <a class="button" href="/settings/users/<%= u._id %>">User Details</a>
+                    </div>
+                <% }); %> 
+            </div>
+        </article>
+    </div>
+<script src="/javascripts/settings.js"></script>
+</section>

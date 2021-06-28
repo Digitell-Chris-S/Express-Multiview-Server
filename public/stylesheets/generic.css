@@ -5,6 +5,13 @@ body {
 a {
   color: #00B7FF;
 }
+
+/* Text */
+.center-text{
+  text-align: center;
+}
+
+
 /* ----------Containers---------------*/
 .error-container{
   text-align: center;
@@ -29,10 +36,13 @@ a {
 
 /* -----------Utilites----------------- */
 /* Layout */
-.flex-row{
+.flex-row-centered{
   display: flex;
   /* justify-content: space-around; */
   align-items: center;
+}
+.flex-row{
+  display: flex;
 }
 .grid-center{
   display: grid;
@@ -75,6 +85,18 @@ a {
 }
 .rounded-50{
   border-radius: 50%;
+}
+
+/* Margin */
+.mb-0{
+  margin-bottom: 0px !important;
+}
+.mb-1{
+  margin-bottom: 1em;
+}
+
+.ma-1{
+  margin:1em;
 }
 
 /* icons */

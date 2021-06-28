@@ -14,7 +14,8 @@ const DesktopSchema = new Schema({
     created:{
         type:Date,
         default: Date.now
-    }
+    },
+    updated: Date
 })
 
 

@@ -28,17 +28,6 @@ const searchbox = document.getElementById('input-search');
 //     }
 // }
 
-// Populate Drop down box from link
-DisplayData = (type, container) => {
-    // Build json object from local storage
-    let arr = JSON.parse( localStorage.getItem(`${type}`) )
-    // Populates drops down list with values from the the fetch function
-    Object.values(arr).forEach((e) => {
-        const {id, name, link} = e
-        container.insertAdjacentHTML('beforeend', `<a class="button enc-btn" id="enc-btn" data-id=${id} data-name=${name} data-link=${link}>${name}</a>`)
-    });
-}
-
 // Add iframe to area, Might add some local storage to thin in the future for local session persisance
 // Display Frame Windows
 DisplayWindows = (url, id) => {
@@ -72,18 +61,6 @@ Placeholder = (element) => {
         element.removeChild(document.getElementById('placeholder'))
     }
 }
-
-// Fetch data from MultiViewer Express Server
-LoadData = (addr) => {
-    fetch(`http://localhost:5000/${addr}`)
-    .then(res => res.json())
-    .then(res => {
-        const storage = window.localStorage
-        storage.setItem(addr, JSON.stringify(res))
-    })
-    .catch(err => console.error("Something went wrong,", err))
-}
-
 
 // --------------------Event handlers-----------------------------
 // Startup Functions
@@ -130,15 +107,6 @@ settingBtn.onclick = () => {
     }
 }
 
-settingPanel.onclick = (e) => {
-    if(e.target.id == "fireSync"){
-        localStorage.clear()
-        laptopEncoderCont.innerHTML = ""
-        desktopEncoderCont.innerHTML = ""
-        LoadData();
-        
-    }
-}
 
 // Sidebar button click events
 sidebar.onclick = (e) => {

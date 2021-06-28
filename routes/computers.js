@@ -6,8 +6,9 @@ const catchAsync = require('../utils/catchAsync')
 // Models
 
 // for testing remove later
-const seeds = require('../seeds.json')
-
+const seeds = require('../seeds.json');
+const isLoggedIn = require('../middleware/isLoggedIn');
+const isAdmin = require('../middleware/isAdmin')
 
 // ------------------------
 // TESTING - Remove later
@@ -15,13 +16,13 @@ router.get('/seed', (req,res, next) => {
   res.render('test/seed')
 })
 // Seed Database Router
-router.post('/seed', catchAsync(async (req, res, next) => {
+router.post('/seed', isLoggedIn, catchAsync(async (req, res, next) => {
   await plantSeeds()
   res.send('planted')
 }))
 // Test route for serving seed data
-router.get('/test', async (req, res, next) => {
-  
+router.get('/test', isLoggedIn, isAdmin, async (req, res, next) => {
+  res.send('You have admin access')
 })
 
 
