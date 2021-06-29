@@ -16,17 +16,10 @@ const settingPanel = document.getElementById('settings');
 const msg = document.getElementById("status-message");
 const viewCont = document.getElementById('view-container');
 const searchbox = document.getElementById('input-search');
+const viewChanger = document.getElementById('view-changer')
 
-// Check to see if local storage is empty
-// CheckFirstRun = () => {
-//     if(localStorage.getItem('test') == null){
-//         LoadData('test');
-//     }
-//     else{
-//         console.log("Welcome Back")
-//         DisplayData('test', desktopEncoderCont)
-//     }
-// }
+let sidebarExpanded = false;
+let settingsExpanded = false;
 
 // Add iframe to area, Might add some local storage to thin in the future for local session persisance
 // Display Frame Windows
@@ -62,12 +55,36 @@ Placeholder = (element) => {
     }
 }
 
+SetWindowView = (v) => {
+    let css = ''
+    switch (v){
+        case 'col':
+            css = " display: grid; grid-auto-rows: auto 1fr; grid-template-columns: 1fr; gap: 0px 0px; place-items:center;"
+            break;
+        case 'Dcol':
+            css = " display: grid; grid-auto-rows: auto 1fr; grid-template-columns: 1fr 1fr; gap: 0px 0px; place-items:center;"
+            break;
+        case 'Tcol':
+            css = " display: grid; grid-auto-rows: auto 1fr; grid-template-columns: 1fr 1fr 1fr; gap: 0px 0px; place-items:center;"
+            break;
+        
+    } 
+    windowCont.style.cssText = css
+}
+
+
 // --------------------Event handlers-----------------------------
 // Startup Functions
 window.onload = () => {
     // CheckFirstRun()
     // check if main container is empty and show a placeholder 
     Placeholder(windowCont)
+    SetWindowView('col')
+}
+
+// Pass the value of the view changer to SetWindowView on change
+viewChanger.onchange = (e) => {
+    SetWindowView(e.target.value)
 }
 
 // Delete window event listener
@@ -87,30 +104,39 @@ windowCont.onclick = (e) => {
 
 // menu button for sidebar
 menuBtn.onclick = () => {
+    if(settingsExpanded){
+        settingPanel.classList.toggle('expanded-height')
+    }
     sidebar.classList.toggle('expanded-width')
     if(sidebar.classList.contains('expanded-width')){
         menuBtn.src = "icons/leftArrow.svg"
+        sidebarExpanded = true;
     }
     else{
         menuBtn.src= "icons/menu.svg"
+        sidebarExpanded = false;
     }
 }
 
 // button for setting menu
 settingBtn.onclick = () => {
+    if(sidebarExpanded){
+        sidebar.classList.toggle('expanded-width')
+    }
     settingPanel.classList.toggle('expanded-height')
     if(settingPanel.classList.contains('expanded-height')){
         settingBtn.src = "icons/upArrow.svg"
+        settingsExpanded = true;
     }
     else{
         settingBtn.src = "icons/gear.svg"
+        settingsExpanded = false;
     }
 }
 
 
 // Sidebar button click events
 sidebar.onclick = (e) => {
-    console.log(e.target)
     if(e.target.id == "enc-btn"){
         link = e.target.dataset.link
         id = e.target.dataset.id

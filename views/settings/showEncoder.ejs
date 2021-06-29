@@ -1,0 +1,60 @@
+<% layout('./layout/boilerplateShow.ejs') %>
+<%- include('../partials/settingNav.ejs')  %> 
+
+<article class="container mt-2">
+    <h3>Encoder <%= comp.name %> Details</h3>
+    <% if(currentUser.role == 'admin'){ %> 
+        <button id="unlock-btn">Unlock</button>
+    <% }else{ %>
+        <h6>Permission: Read Only</h6>
+    <% } %> 
+    <hr />
+    <form class="form" action="<%= comp.id %>?_method=PATCH" method="POST">
+        <% if(currentUser.role == 'admin'){ %>    
+        <div>
+            <label>Encoder Name</label>
+            <input class="disabled" type="text" name="encoder[name]" id="name" value='<%=comp.name%>' disabled='true'>
+        </div>
+        <div>   
+            <label>PingPlotter Link</label>
+            <input class="disabled" type="text" name="encoder[link]" id="link" value='<%=comp.link%>' disabled='true'>
+        </div>
+        <div class="flex-column">
+            <div class="mb-1">
+                <strong>Originally Added:</strong> <%= comp.created %>
+            </div> 
+            <% if(comp.updated){ %>
+            <div class="mb-1">
+                <strong>Last Updated:</strong> <%= comp.updated %>
+            </div> 
+            <% } %> 
+        </div>
+        <div>
+            <button class="button button-primary disabled" type="submit" id="sub" disabled="true">Submit</button>
+            <a class="button cancel-btn" href="/settings">Cancel</a>
+        </div>
+        <% } else { %> 
+            <div class="mb-2">
+                <label>Encoder Name</label>
+                <%=comp.name%>
+            </div>
+            <div class="mb-2">   
+                <label>PingPlotter Link</label>
+                <%=comp.link%>
+            </div>
+            <div class="flex-column">
+                <div class="mb-1">
+                    <strong>Originally Added:</strong> <%= comp.created %>
+                </div> 
+                <% if(comp.updated){ %>
+                <div class="mb-1">
+                    <strong>Last Updated:</strong> <%= comp.updated %>
+                </div> 
+                <% } %> 
+            </div>
+        <div>
+            <a class="button cancel-btn" href="/settings">Back</a>
+        </div>
+        <% } %> 
+    </form>
+</article>

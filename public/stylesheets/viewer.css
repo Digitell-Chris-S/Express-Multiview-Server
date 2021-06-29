@@ -59,7 +59,7 @@ main{
 /* Sidebar Panel */
 .sidebar-container{
     position: absolute;
-    top:8em;
+    top:6em;
     left:0;
         
     width:25em;
@@ -76,9 +76,6 @@ main{
 }
 
 /* Sidebar Encoder Sections */
-.encoder-container{
-
-}
 
 /* Frames */
 .frame-container{
@@ -157,6 +154,7 @@ main{
 }
 .remove-btn{
     color:#fff;
+    margin:.5em;
 }
 .remove-btn:hover{
     border-color:white;

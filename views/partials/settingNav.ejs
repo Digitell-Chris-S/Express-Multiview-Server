@@ -1,0 +1,12 @@
+<nav class="flex-row-between">
+    <div class="flex-row">
+    <a class="button ma-1 mb-1 nav-btn" href="/viewer">Viewer</a>
+    <a class="button ma-1 mb-1 nav-btn" href="/settings">Settings</a>
+    </div>
+    <form class="mb-0 flex-row-centered" action="/login/logout" method="POST">
+        <%if(currentUser){ %>
+         <label style="color:rgb(233, 233, 233);">Welcome: <%= currentUser.username  %> </label>
+         <% } %> 
+        <button class="ma-1 mb-1 button-primary" type="submit">Logout</button>
+    </form>  
+</nav>

@@ -1,0 +1,9 @@
+input[type=text]{
+    width:auto;
+}
+
+.disabled{
+    background-color: rgba(92, 92, 92, 0.24) !important;
+    border-color: rgb(117, 117, 117) !important;
+    color:rgb(146, 146, 146) !important;
+}

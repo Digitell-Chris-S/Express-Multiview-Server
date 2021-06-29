@@ -7,7 +7,7 @@ const userWidget = document.getElementById('users-container')
 const desktopSearch = document.getElementById('desktop-search')
 const laptopSearch = document.getElementById('laptop-search')
 
-const navMenu = document.getElementById('setting-nav')
+
 
 // Update Displayed section based on selected tab
 const ShowWidget = (str) => {
@@ -46,14 +46,6 @@ window.onload = () => {
     ToggleContainer(navMenu)
 }
 
-// (In menu) Collapse and Expand menu
-document.getElementById('collapse-btn').onclick = () => {
-    ToggleContainer(navMenu)
-}
-
-document.getElementById('nav-btn').onclick = () => {
-    ToggleContainer(navMenu)
-}
 
 // Visually change selected tab and call showWidget to update page contents
 tabContainer.onclick = (e) => {

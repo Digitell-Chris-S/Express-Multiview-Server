@@ -1,0 +1,41 @@
+<% layout('./layout/boilerplateLogin.ejs') %> 
+<%- include('../partials/settingNav.ejs') %> 
+<section class="container grid-center mt-2 row">
+    <h3>User Details</h3>
+    <% if(currentUser.role == "admin"){  %>
+        <button class="button">Unlock</button>
+    <% }else{ %>
+        <span>Permission: Read Only</span>
+    <% } %>
+    <form action="" method="">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" value=<%= user.username %> required>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value=<%= user.email %>  required>
+        </div>
+        <div>
+            <label>Current Role: <%= user.role %></label>
+            <label for="role" style="display: inline;">Change Role:</label>
+            <select name="role">
+                <option value="">Choose Role</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <div>
+            <label for="password">New Password</label>
+            <input type="password" name="password" id="password1">
+        </div>
+        <div>
+            <label for="password">Re-Type Password</label>
+            <input type="password" id="password2">
+        </div>
+        <div>
+            <button type="submit" class="button button-primary">Submit</button>
+            <a href="/settings" class="button cancel-btn">Cancel</a>
+        </div>
+    </form> 
+</section>

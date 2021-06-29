@@ -18,19 +18,19 @@ router.get('/', isLoggedIn, catchAsync(async (req, res) => {
 router.get('/desktops/:id', isLoggedIn, catchAsync(async (req, res) => {
     const {id} = req.params
     const comp = await Desktop.findById({_id: id})
-    res.render('settings/show', {comp, post:'desktops'})
+    res.render('settings/showEncoder', {comp, post:'desktops'})
 }));
 // Laptop Edit Form
 router.get('/laptops/:id', isLoggedIn, catchAsync(async (req, res) => {
     const {id} = req.params
     const comp = await Laptop.findById({_id: id})
-    res.render('settings/show', {comp, post:'laptops'})
+    res.render('settings/showEncoder', {comp, post:'laptops'})
 }));
 // User Show
-router.get('/users/:id', isLoggedIn, catchAsync(async (req, res) => {
+router.get('/users/:id', isLoggedIn, isAdmin, catchAsync(async (req, res) => {
     const {id} = req.params
-    const comp = await User.findById({_id: id})
-    res.send(comp)
+    const user = await User.findById({_id: id})
+    res.render('settings/showUser', {user})
 }));
 
 

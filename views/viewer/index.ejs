@@ -1,5 +1,5 @@
-<% layout('./layout/boilerplate.ejs') %> 
-<link rel="stylesheet" href="/stylesheets/viewer.css">
+<% layout('./layout/boilerplateViewer.ejs') %> 
+
 
     <div id="overlay" class="overlay">
         <div class="loading-content">
@@ -41,8 +41,16 @@
     <main>
         <section class="sidebar-container collapsed-width slide-in-left" id="sidebar" attr="sidebar">
             <article>
-                <div class="center-text">
+                <div class="flex-column-centered container">
                     <a id="clear-all" class="button remove-btn">Clear All Windows</a>
+                    <div class="flex-row-even">
+                        <label for="view" class="p-05">View:</label>
+                        <select name="view" id="view-changer">
+                            <option value="col">Column</option>
+                            <option value="Dcol">Dual-Column</option>
+                            <option value="Tcol">Triple-Column</option>
+                        </select>
+                    </div>
                 </div>
                 <article class="sidebar-subcontainer center-text">
                     <h4>Manual Link</h4>
@@ -85,5 +93,4 @@
             </div>
         </section>
     </main>
-<!-- Client Side Behavior -->
-<script src="/javascripts/viewer.js"></script>
+

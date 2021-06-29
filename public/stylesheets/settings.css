@@ -57,7 +57,12 @@ a:hover{
 }
 
 .user-card{
+    background-color: slategrey;
+    margin:1em auto;
+    max-width: 50%;
+    padding:1em;
     border: 1px solid #fff;
+    border-radius: 1em;
     justify-content: space-between;
 }
 
@@ -77,16 +82,12 @@ a:hover{
     color:#fff;
     background-color: rgb(209, 0, 0);
 }
-.nav-btn{
-    position: absolute;
-    top:2.6em;
-    left:1em;
-}
+
 
 
 /* Dynamic Classes */
 
-.tab-selected{ 
+.tab-selected{
     background-color: #0667a8;
     color:rgb(173, 198, 223);
     border-width:1px 1px 0px 1px;
@@ -96,4 +97,16 @@ a:hover{
 }
 .collapsed{
     left:-100em
+}
+
+@media screen and (min-width: 768px){
+    .auto-grid{
+        grid-template-columns: 1fr 1fr 1fr; 
+    }
+}
+
+@media screen and (min-width: 1200px){
+    .auto-grid{
+        grid-template-columns: 1fr 1fr 1fr 1fr; 
+    }
 }
