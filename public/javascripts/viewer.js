@@ -20,6 +20,7 @@ const viewChanger = document.getElementById('view-changer')
 
 let sidebarExpanded = false;
 let settingsExpanded = false;
+let frameSize = window.innerWidth - 200;
 
 // Add iframe to area, Might add some local storage to thin in the future for local session persisance
 // Display Frame Windows
@@ -30,7 +31,7 @@ DisplayWindows = (url, id) => {
             <img id="remove-btn" class="btn remove-btn icon-small" src="icons/delete.svg">
             <img id="report-btn" class="btn icon-small" src="icons/report.svg" data-id="${id}">
         </div>
-        <iframe src="${url}" frameborder="0" width="800" height="500"></iframe>
+        <iframe src="${url}" frameborder="0" width="${frameSize}" height="600"></iframe>
     </article>`
 
     windowCont.insertAdjacentHTML('afterbegin', frameContent);
@@ -59,17 +60,26 @@ SetWindowView = (v) => {
     let css = ''
     switch (v){
         case 'col':
-            css = " display: grid; grid-auto-rows: auto 1fr; grid-template-columns: 1fr; gap: 0px 0px; place-items:center;"
+            css = " display: grid; grid-auto-rows: auto 1fr; grid-template-columns: 1fr; gap: 0px 0px; place-items:center; width:100vw;"
+            frameSize = window.innerWidth - 100
             break;
         case 'Dcol':
             css = " display: grid; grid-auto-rows: auto 1fr; grid-template-columns: 1fr 1fr; gap: 0px 0px; place-items:center;"
+            frameSize = (window.innerWidth - 75) / 2
             break;
         case 'Tcol':
             css = " display: grid; grid-auto-rows: auto 1fr; grid-template-columns: 1fr 1fr 1fr; gap: 0px 0px; place-items:center;"
+            frameSize = (window.innerWidth - 100) / 3
             break;
-        
     } 
+    // change the grid layout of the frame container
     windowCont.style.cssText = css
+
+    const frames = document.querySelectorAll('iframe')
+
+    Array.from(frames).forEach(frame => {
+        frame.width = frameSize;
+    })
 }
 
 
