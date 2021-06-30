@@ -13,11 +13,5 @@ router.get('/', isLoggedIn, catchAsync( async (req, res) => {
     res.render('viewer/index', {desktops, laptops})
 }));
 
-router.get('/test', (req, res) => {
-    req.flash('info', 'this is a flash')
-    res.redirect('/viewer')
-})
-
-
 
 module.exports = router
