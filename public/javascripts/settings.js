@@ -22,6 +22,7 @@ const ShowWidget = (str) => {
     })
 }
 
+// filter function
 const SearchFilter = (str, arr) => {
     Array.from(arr).forEach(item => {
         if( item.textContent.includes(str.toLowerCase()) ){
