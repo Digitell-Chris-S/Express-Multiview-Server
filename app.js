@@ -17,15 +17,22 @@ const User = require('./models/user')
 // Express instance
 var app = express();
 
+var enviroment = process.env.NODE_ENV
 // ------------Connect To Mongo--------
 const mongoose = require('mongoose');
 const { serializeUser } = require('passport');
-mongoose.connect('mongodb+srv://root:CMhCS6aK2uAvjHcObbt0@multiviewer.haa1z.mongodb.net/multiviewer?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+if(enviroment === "production"){
+  mongoose.connect('mongodb+srv://root:CMhCS6aK2uAvjHcObbt0@multiviewer.haa1z.mongodb.net/multiviewer?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+}
+else{
+  mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true});
+}
+
 const db = mongoose.connection;
 // Mongo Connection Monitoring
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('Connection Open')
+  console.log('Connection Open', enviroment)
 });
 
 // -------------Session Config----------
