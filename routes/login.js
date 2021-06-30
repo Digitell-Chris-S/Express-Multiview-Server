@@ -5,13 +5,15 @@ const passport = require('passport')
 
 const catchAsync = require('../utils/catchAsync');
 const { session } = require('passport');
+const isLoggedIn = require('../middleware/isLoggedIn');
+const isAdmin = require('../middleware/isAdmin');
 
 // Forms
 router.get('/', (req, res) => {
     res.render('login/login')
 })
 
-router.get('/register',  (req, res) => {
+router.get('/register', isLoggedIn, isAdmin,  (req, res) => {
     res.render('login/register')
 });
 
