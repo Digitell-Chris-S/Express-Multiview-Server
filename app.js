@@ -20,7 +20,7 @@ var app = express();
 // ------------Connect To Mongo--------
 const mongoose = require('mongoose');
 const { serializeUser } = require('passport');
-mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://root:CMhCS6aK2uAvjHcObbt0@multiviewer.haa1z.mongodb.net/multiviewer?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 // Mongo Connection Monitoring
 db.on('error', console.error.bind(console, 'connection error:'));
