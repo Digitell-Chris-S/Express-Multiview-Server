@@ -92,6 +92,11 @@ window.onload = () => {
     SetWindowView('col')
 }
 
+// resize all the frame when the user changes the window size
+window.onresize = () => {
+    SetWindowView(viewChanger.value) 
+}
+
 // Pass the value of the view changer to SetWindowView on change
 viewChanger.onchange = (e) => {
     SetWindowView(e.target.value)
