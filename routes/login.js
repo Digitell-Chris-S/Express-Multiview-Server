@@ -20,13 +20,13 @@ router.get('/register', isLoggedIn, isAdmin,  (req, res) => {
 // User Login
 router.post('/', passport.authenticate('local', {failureFlash: true, failureRedirect:'/login'}), (req, res) => {
     req.flash('success', `Logged in as "${req.body.username}"`)
-    res.redirect('/settings')
+    res.redirect('/viewer')
 });
 
 
 
 // Register User Account
-router.post('/register', catchAsync( async (req, res) => {
+router.post('/register', isLoggedIn, isAdmin, catchAsync( async (req, res) => {
     try{
         const {username, email, password, role} = req.body;
         console.log(req.body)

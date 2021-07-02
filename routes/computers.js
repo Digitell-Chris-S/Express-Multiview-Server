@@ -12,7 +12,7 @@ const isAdmin = require('../middleware/isAdmin')
 
 // ------------------------
 // TESTING - Remove later
-router.get('/seed', (req,res, next) => {
+router.get('/seed', isLoggedIn, (req,res, next) => {
   res.render('test/seed')
 })
 // Seed Database Router
@@ -25,16 +25,6 @@ router.get('/test', isLoggedIn, isAdmin, async (req, res, next) => {
   res.send('You have admin access')
 })
 
-
-
-// Get Computer Collections
-router.get('/desktops', async (req, res, next) => {
-  
-});
-
-router.get('/laptops', async (req, res, next) => {
-  
-})
 
 
 module.exports = router;

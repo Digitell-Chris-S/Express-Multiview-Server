@@ -101,6 +101,26 @@ main{
     border: 2px dashed rgb(204, 204, 204);
 }
 
+/* Loading Overlay */
+.overlay{
+    display: none;
+    place-items: center;
+    color:rgb(204, 204, 204);
+    text-align: center;
+    position: fixed;
+    top:0px;
+    z-index: 10;
+    height:100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.527);
+}
+.loading{
+    height: 5em;
+    width: 5em;
+    animation: load 2s linear infinite;
+    
+}
+
 /* Dynamic Classes */
 /* ---------------------------------------------- */
 .msg,
@@ -213,6 +233,28 @@ mb-0{
 
 /* Keyframes */
 /* ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * Loading Wheel Spin
+ * ----------------------------------------
+ */
+ @-webkit-keyframes load{
+    0%{
+        -webkit-transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes load{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
 
 /**
  * ----------------------------------------

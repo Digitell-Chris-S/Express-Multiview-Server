@@ -1,5 +1,6 @@
 
 // Selectors (there are unused things in here...probobly)
+
 // The longer this is here the more I dont like it
 const laptopEncoderCont = document.getElementById('laptopEncoderBtn-Container');
 const urlInput = document.getElementById("input-address");
@@ -18,18 +19,21 @@ const viewCont = document.getElementById('view-container');
 const searchbox = document.getElementById('input-search');
 const viewChanger = document.getElementById('view-changer')
 
+// Global Variables
 let sidebarExpanded = false;
 let settingsExpanded = false;
+// Dynamic size of iframes
 let frameSize = window.innerWidth - 200;
+
 
 // Add iframe to area, Might add some local storage to thin in the future for local session persisance
 // Display Frame Windows
-DisplayWindows = (url, id) => {
+DisplayWindows = (url) => {
     let frameContent = `
-    <article class="frame-container rounded-1" id="frame-container" data-id=${id}>
+    <article class="frame-container rounded-1" id="frame-container">
         <div class="frame-header">
             <img id="remove-btn" class="btn remove-btn icon-small" src="icons/delete.svg">
-            <img id="report-btn" class="btn icon-small" src="icons/report.svg" data-id="${id}">
+            <img id="report-btn" class="btn icon-small" src="icons/report.svg" >
         </div>
         <iframe src="${url}" frameborder="0" width="${frameSize}" height="600"></iframe>
     </article>`
@@ -52,10 +56,14 @@ Placeholder = (element) => {
         `)
     }
     else{
-        element.removeChild(document.getElementById('placeholder'))
+        // Check is placeholder element is actually on the page before trying to remove it
+        if(document.getElementById('placeholder' != null)){
+            element.removeChild(document.getElementById('placeholder'))
+        }
     }
 }
 
+// Set layout and frame size based on user input
 SetWindowView = (v) => {
     let css = ''
     switch (v){
@@ -76,20 +84,70 @@ SetWindowView = (v) => {
     windowCont.style.cssText = css
 
     const frames = document.querySelectorAll('iframe')
-
+    // update the size of existing iframes already on the page
     Array.from(frames).forEach(frame => {
         frame.width = frameSize;
     })
 }
 
+// Read Local Storage and return value
+ReadCache = (tag) => {
+    return localStorage.getItem(tag)
+}
+
+// Store selected links in Local storage
+CacheFrames = (link) => {
+    let storedFrames = ReadCache('frames')
+    // Check if there are any frames cached and append onto that
+    if(storedFrames && storedFrames.length){
+        let oldFrames = JSON.parse(storedFrames)
+        oldFrames.push(link)
+        localStorage.setItem('frames', JSON.stringify(oldFrames))
+    }
+    // if cache is empty create cache
+    else{
+        links = [link]
+        RenderCachedFrames(links)
+        localStorage.setItem('frames', JSON.stringify(links))
+    }
+}
+
+// Pull links from local storage and render them to the page
+RenderCachedFrames = (l) => {
+    if(l && l.length){
+        l.forEach(link => {
+            DisplayWindows(l)
+        })
+    }
+}
+
+RemoveCachedFrame = (l) => {
+    const frames = JSON.parse(ReadCache('frames'))
+    const filtered = frames.filter(f => f != l )
+    localStorage.setItem('frames', JSON.stringify(filtered))
+}
+
+// Show Loading Overlay
+PrettyLoad = () => {
+   document.querySelector('.overlay').style.display = 'grid'
+   setTimeout(() => {
+       document.querySelector('.overlay').style.display = 'none'
+   }, 2 * 1000)
+}
 
 // --------------------Event handlers-----------------------------
 // Startup Functions
 window.onload = () => {
-    // CheckFirstRun()
+    // Check caches and render any previous frames 
+    RenderCachedFrames(JSON.parse( localStorage.getItem('frames')) )
+    // Set Default View
+    SetWindowView('col')
     // check if main container is empty and show a placeholder 
     Placeholder(windowCont)
-    SetWindowView('col')
+    if(localStorage.getItem('frames') && localStorage.getItem('frames') != null){
+        PrettyLoad()
+    }
+
 }
 
 // resize all the frame when the user changes the window size
@@ -105,15 +163,21 @@ viewChanger.onchange = (e) => {
 // Delete window event listener
 windowCont.onclick = (e) => {
     if(e.target.id == "remove-btn"){
-       let cont = e.target.parentNode.parentNode;
-       windowCont.removeChild(cont);
+       let cont = e.target.parentNode;
+    //This Feels Very gross....why?
+       const frame = cont.parentNode.childNodes[3].src;
+        // Remove cached link from storage
+       RemoveCachedFrame(frame)
+
+       windowCont.removeChild(cont.parentNode);
        Placeholder(windowCont);
+
     }
     else if( e.target.id == "report-btn" ){
-        // cache the ID of the window
-       localStorage.setItem('windowCache', e.target.dataset.id)
+        
+       
         // redirect to the edit form
-       window.location.replace("report.html")
+       window.location.replace('')
     }
 }
 
@@ -154,8 +218,8 @@ settingBtn.onclick = () => {
 sidebar.onclick = (e) => {
     if(e.target.id == "enc-btn"){
         link = e.target.dataset.link
-        id = e.target.dataset.id
-        DisplayWindows(link, id);
+        DisplayWindows(link);
+        CacheFrames(link)
     }
     else if(e.target.id == "add-btn"){
         if(urlInput.value != ""){
@@ -165,9 +229,10 @@ sidebar.onclick = (e) => {
             alert('Error:No Input Provided')
         }
     }
-    else if(e.target.classList.contains("clear-btn")){
+    else if(e.target.id == "clear-all" ){
         windowCont.innerHTML = ''
         Placeholder(windowCont);
+        localStorage.clear()
     }
 }
 
