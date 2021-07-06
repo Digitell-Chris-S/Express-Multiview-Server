@@ -8,7 +8,8 @@ CheckLocked = (l) => {
     const submit = document.querySelector('#sub')
 
     const fields = [name, link, submit]
-
+   
+    
     if(!l){
         fields.forEach(field => {
             field.classList.remove('disabled')

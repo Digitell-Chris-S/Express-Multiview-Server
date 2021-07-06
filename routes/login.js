@@ -7,6 +7,7 @@ const catchAsync = require('../utils/catchAsync');
 const { session } = require('passport');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const isAdmin = require('../middleware/isAdmin');
+const sendMail = require('../middleware/sendEmail');
 
 // Forms
 router.get('/', (req, res) => {
@@ -26,18 +27,13 @@ router.post('/', passport.authenticate('local', {failureFlash: true, failureRedi
 
 
 // Register User Account
-router.post('/register', isLoggedIn, isAdmin, catchAsync( async (req, res) => {
+router.post('/register', isLoggedIn, isAdmin, sendMail('new_user'), catchAsync( async (req, res) => {
     try{
         const {username, email, password, role} = req.body;
-        console.log(req.body)
         const user = new User({username: username,email: email, role: role})
         const registeredUser = await User.register(user, password);
-        req.login(registeredUser, err => {
-            if(err) return next(err)
-            req.flash('success', 'User Created')
-            res.redirect('/viewer')
-        });
-      
+        req.flash('success', 'User Created')
+        res.redirect('/viewer')
     }
     catch(e){
         req.flash('error', e.message)

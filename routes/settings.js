@@ -71,4 +71,19 @@ router.patch('/laptops/:id', isLoggedIn, isAdmin, catchAsync( async(req, res) =>
     
 }))
 
+// Edit User Post Request
+router.patch('/users/:id', isLoggedIn, isAdmin, catchAsync(async (req,res) => {
+    try{
+        const {id} = req.params
+        const changes = req.body.user
+        const user = await User.findByIdAndUpdate(id, changes)
+        req.flash('success', 'Your changes have been saved')
+        res.redirect(`/settings/users/${id}`)
+    }
+    catch(err){
+        req.flash('error', 'Unable to make changes: ', err.message)
+        res.redirect(`/settings/users/${id}`)
+    }
+}));
+
 module.exports = router

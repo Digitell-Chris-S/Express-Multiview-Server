@@ -1,0 +1,35 @@
+<%- layout('/layout/boilerplateReport.ejs')  %>
+<%- include('../partials/settingNav.ejs')  %>
+
+<form class="flex-column-centered mt-2" action="/viewer/report" method="POST"> 
+    <div>
+        <h3>Report an Issue</h3>
+        <hr>
+        <div class="flex-row">
+            <label for="name" style="margin-right: 0.5em;">Encoder: </label>
+            <input id="name" name="name" value="<%= computer.name %>">
+        </div>
+        <div class="flex-row">
+            <label for="email" style="margin-right: 0.5em;">Your Email: </label>
+            <input id="email" name="email" value="<%= currentUser.email %>">
+        </div>
+        <div class="flex-column mb-1">
+            <label for="problem">What kind of problem are you having?</label>
+            <select id="problem" name="problem">
+                <option value="">Select Problem</option>
+                <option value="Link Expired">Link has Expired</option>
+                <option value="Link Invalid">Link is Invalid</option>
+                <option value="Encoder Deleted">Encoder Deleted</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div id="message">
+            <label for="message">Describe Your Issue</label>
+            <textarea  id="message" name="message" rows="5" cols="35" required></textarea>
+        </div>
+        <div>
+            
+            <button id="submit-btn" type="submit" class="button-primary">Submit Ticket</button>
+        </div>
+    </div>  
+</form>

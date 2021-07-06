@@ -28,12 +28,12 @@ let frameSize = window.innerWidth - 200;
 
 // Add iframe to area, Might add some local storage to thin in the future for local session persisance
 // Display Frame Windows
-DisplayWindows = (url) => {
+DisplayWindows = (url, id) => {
     let frameContent = `
-    <article class="frame-container rounded-1" id="frame-container">
+    <article class="frame-container rounded-1" id="frame-container" data-id="${id}">
         <div class="frame-header">
             <img id="remove-btn" class="btn remove-btn icon-small" src="icons/delete.svg">
-            <img id="report-btn" class="btn icon-small" src="icons/report.svg" >
+            <a href="/viewer/report/${id}"><img id="report-btn" class="btn icon-small" src="icons/report.svg" ></a>
         </div>
         <iframe src="${url}" frameborder="0" width="${frameSize}" height="600"></iframe>
     </article>`
@@ -89,65 +89,66 @@ SetWindowView = (v) => {
         frame.width = frameSize;
     })
 }
+// ------------------------------------
+// loading a window from cache and refreshing the page breaks the ping plotter session
+// Perisitent windows will Probobly not be a thing as long as the public links work like this
+// ------------------------------------
 
-// Read Local Storage and return value
-ReadCache = (tag) => {
-    return localStorage.getItem(tag)
-}
+// // Read Local Storage and return value
+// ReadCache = (tag) => {
+//     return localStorage.getItem(tag)
+// }
 
 // Store selected links in Local storage
-CacheFrames = (link) => {
-    let storedFrames = ReadCache('frames')
-    // Check if there are any frames cached and append onto that
-    if(storedFrames && storedFrames.length){
-        let oldFrames = JSON.parse(storedFrames)
-        oldFrames.push(link)
-        localStorage.setItem('frames', JSON.stringify(oldFrames))
-    }
-    // if cache is empty create cache
-    else{
-        links = [link]
-        RenderCachedFrames(links)
-        localStorage.setItem('frames', JSON.stringify(links))
-    }
-}
+// CacheFrames = (link) => {
+//     let storedFrames = ReadCache('frames')
+//     // Check if there are any frames cached and append onto that
+//     if(storedFrames && storedFrames.length){
+//         let oldFrames = JSON.parse(storedFrames)
+//         oldFrames.push(link)
+//         localStorage.setItem('frames', JSON.stringify(oldFrames))
+//     }
+//     // if cache is empty create cache
+//     else{
+//         links = [link]
+//         RenderCachedFrames(links)
+//         localStorage.setItem('frames', JSON.stringify(links))
+//     }
+// }
 
 // Pull links from local storage and render them to the page
-RenderCachedFrames = (l) => {
-    if(l && l.length){
-        l.forEach(link => {
-            DisplayWindows(l)
-        })
-    }
-}
+// RenderCachedFrames = (l) => {
+//     if(l && l.length){
+//         l.forEach(link => {
+//             DisplayWindows(l)
+//         })
+//     }
+// }
 
-RemoveCachedFrame = (l) => {
-    const frames = JSON.parse(ReadCache('frames'))
-    const filtered = frames.filter(f => f != l )
-    localStorage.setItem('frames', JSON.stringify(filtered))
-}
+// 
+// RemoveCachedFrame = (l) => {
+//     const frames = JSON.parse(ReadCache('frames'))
+//     const filtered = frames.filter(f => f != l )
+//     localStorage.setItem('frames', JSON.stringify(filtered))
+// }
 
 // Show Loading Overlay
-PrettyLoad = () => {
-   document.querySelector('.overlay').style.display = 'grid'
-   setTimeout(() => {
-       document.querySelector('.overlay').style.display = 'none'
-   }, 2 * 1000)
-}
+// PrettyLoad = () => {
+//    document.querySelector('.overlay').style.display = 'grid'
+//    setTimeout(() => {
+//        document.querySelector('.overlay').style.display = 'none'
+//    }, 2 * 1000)
+// }
+
+// -----------------------------------------------------------------
 
 // --------------------Event handlers-----------------------------
 // Startup Functions
 window.onload = () => {
-    // Check caches and render any previous frames 
-    RenderCachedFrames(JSON.parse( localStorage.getItem('frames')) )
     // Set Default View
     SetWindowView('col')
     // check if main container is empty and show a placeholder 
     Placeholder(windowCont)
-    if(localStorage.getItem('frames') && localStorage.getItem('frames') != null){
-        PrettyLoad()
-    }
-
 }
 
 // resize all the frame when the user changes the window size
@@ -167,17 +168,17 @@ windowCont.onclick = (e) => {
     //This Feels Very gross....why?
        const frame = cont.parentNode.childNodes[3].src;
         // Remove cached link from storage
-       RemoveCachedFrame(frame)
-
+       
        windowCont.removeChild(cont.parentNode);
        Placeholder(windowCont);
 
     }
     else if( e.target.id == "report-btn" ){
+        const cont = e.target.parentNode
+        const frameId = cont.parentNode.dataset.id
         
-       
         // redirect to the edit form
-       window.location.replace('')
+        // window.location.replace('')
     }
 }
 
@@ -218,8 +219,8 @@ settingBtn.onclick = () => {
 sidebar.onclick = (e) => {
     if(e.target.id == "enc-btn"){
         link = e.target.dataset.link
-        DisplayWindows(link);
-        CacheFrames(link)
+        id = e.target.dataset.id
+        DisplayWindows(link, id);
     }
     else if(e.target.id == "add-btn"){
         if(urlInput.value != ""){
