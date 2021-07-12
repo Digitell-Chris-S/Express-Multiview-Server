@@ -46,6 +46,20 @@ const sendMail = function(type){
                 `, // html body
                 });
             }
+            else if(type == "user_edit"){
+                // send mail with defined transport object
+                let info = await transporter.sendMail({
+                    from: 'Multiviewer, <Mulitviewer>', // sender address
+                    to: "csampson@digitellinc.com", // list of receivers
+                    subject: "MulitViewer: User Made Changes to Account", // Subject line
+                    html: `
+                    <h2>New Account: ${req.body.username}</h2>
+                    <h3>User Email: ${req.body.email}</h3>
+                    <h3>User Role: ${req.body.role}</h3>
+                    <span>Account Created by: ${req.currentUser}</span>
+                    `, // html body
+                });
+            }
             next()  
         }
         catch(err){

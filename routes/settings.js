@@ -6,7 +6,8 @@ const isAdmin = require('../middleware/isAdmin')
 
 const Desktop = require('../models/desktop')
 const Laptop = require('../models/laptop')
-const User = require('../models/user')
+const User = require('../models/user');
+const sendMail = require('../middleware/sendEmail');
 
 router.get('/', isLoggedIn, catchAsync(async (req, res) => {
     const desktops = await Desktop.find({})
@@ -37,6 +38,28 @@ router.get('/users/:id', isLoggedIn, isAdmin, catchAsync(async (req, res) => {
 // -----------------Post Requests---------------------
 // ---------------------------------------------------
 
+// Create Encoder
+router.post('/encoder/new', isLoggedIn, isAdmin, catchAsync( async (req, res) => {
+    try{
+        const {encoder} = req.body
+        if(encoder.type == "Desktop"){
+            console.log("type: desktop, ", encoder)
+            let newUser = new Desktop({name: encoder.name, link:encoder.link})
+            await newUser.save()   
+        }
+        else if(encoder.type == "Laptop"){
+            console.log("type: laptop, ",encoder)
+            let newUser = new Laptop({name: encoder.name, link: encoder.link})
+            await newUser.save()
+        }
+        res.redirect('/settings')
+    }
+    catch(err){
+        console.log(err)
+    }
+}))
+
+
 // Desktop Patch Request
 router.patch('/desktops/:id', isLoggedIn, isAdmin, catchAsync( async(req, res) => {
     try{
@@ -51,8 +74,8 @@ router.patch('/desktops/:id', isLoggedIn, isAdmin, catchAsync( async(req, res) =
         req.flash('error', 'Unable to make changes: ', err.message)
         res.redirect(`/settings/desktops/${id}`)
     }
-    
 }))
+
 
 // Laptop Patch Request
 router.patch('/laptops/:id', isLoggedIn, isAdmin, catchAsync( async(req, res) => {
@@ -73,15 +96,15 @@ router.patch('/laptops/:id', isLoggedIn, isAdmin, catchAsync( async(req, res) =>
 
 // Edit User Post Request
 router.patch('/users/:id', isLoggedIn, isAdmin, catchAsync(async (req,res) => {
+    const id = req.params.id
+    const userChanges = req.body.user
     try{
-        const {id} = req.params
-        const changes = req.body.user
-        const user = await User.findByIdAndUpdate(id, changes)
+        await User.findByIdAndUpdate(id, userChanges)
         req.flash('success', 'Your changes have been saved')
         res.redirect(`/settings/users/${id}`)
     }
     catch(err){
-        req.flash('error', 'Unable to make changes: ', err.message)
+        req.flash('error', 'Unable to make changes - ', err.message)
         res.redirect(`/settings/users/${id}`)
     }
 }));

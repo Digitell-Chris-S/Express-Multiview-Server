@@ -44,7 +44,7 @@ const ToggleContainer = (element) => {
 // Init the page on load
 window.onload = () => {
     ShowWidget('desktops-container')
-    ToggleContainer(navMenu)
+    // ToggleContainer(navMenu)
 }
 
 

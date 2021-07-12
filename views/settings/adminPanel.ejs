@@ -13,7 +13,7 @@
     <div class="encoder-container">
         <article id="desktops-container" class="encoder-section ma-1 p-1 rounded-1">
             <h3 class="center-text">Desktops</h3>
-            <div class="flex-row-even">
+            <div>
                 <div class="center-text">
                     <label>Filter Desktops</label>
                     <input type="text" id="desktop-search">
@@ -39,8 +39,10 @@
                 <% }); %> 
             </div>
         </article>
-        <article  id="users-container" class="encoder-section ma-1 p-1 rounded-1">
-            <h3 class="center-text">Users</h3>
+        <article  id="users-container" class="container encoder-section ma-1 p-1 rounded-1" style="margin:0 auto;">
+            <div class="container">
+                <h3 class="center-text">Users</h3>
+            </div>
             <div class="container">
                 <% users.forEach(u => { %>
                     <div class="user-card flex-row-centered">

@@ -4,6 +4,7 @@ var router = express.Router();
 const plantSeeds = require('../dataHelpers')
 const catchAsync = require('../utils/catchAsync')
 // Models
+const User = require('../models/user')
 
 // for testing remove later
 const seeds = require('../seeds.json');
@@ -32,6 +33,16 @@ router.post('/testreport', isLoggedIn, sendMail('report'), (req, res) => {
   res.redirect('/computers/mailtest')
 })
 
+// Create new Encoders
+router.get('/new', isLoggedIn, isAdmin, (req, res) => {
+  res.render('settings/newEncoder')
+})
+
+router.post('/new', isLoggedIn, isAdmin, (req, res) => {
+  const [user] = req.body
+  const newUser = new User(User)
+  newUser.save()
+})
 
 
 module.exports = router;

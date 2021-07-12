@@ -26,7 +26,7 @@ if(enviroment === "production"){
   mongoose.connect('mongodb+srv://root:CMhCS6aK2uAvjHcObbt0@multiviewer.haa1z.mongodb.net/multiviewer?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 }
 else{
-  mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+  mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify:false});
 }
 
 const db = mongoose.connection;

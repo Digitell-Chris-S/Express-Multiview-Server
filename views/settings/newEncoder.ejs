@@ -1,0 +1,32 @@
+<% layout('./layout/boilerplateShow.ejs') %>
+<%- include('../partials/settingNav.ejs')  %>
+
+<article class="container">
+    <form class="flex-column center-text" action="/settings/encoder/new" method="POST">
+        <h2>Create New Encoder</h2>
+        <hr>
+        <div class="flex-row-even">
+            <div class="left-text">
+                <label for="name">Encoder Name:</label>
+                <input class="textbox-wide" type="text" name="encoder[name]" id="name">
+            </div>
+            <div class="left-text">
+                <label for="link">PingPlotter Link:</label>
+                <input class="textbox-wide" type="text" name="encoder[link]" id="link">
+            </div>
+        </div>
+        <div class="flex-row-even">
+            <div>
+                <label for="type-desktop">Desktop</label>
+                <input type="radio" name="encoder[type]" id="type-desktop" value="Desktop">
+            </div>
+            <div>
+                <label for="type-desktop">Laptop</label>
+                <input type="radio" name="encoder[type]" id="type-laptop" value="Laptop">
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="button">Submit</button>
+        </div>
+    </form>
+</article>

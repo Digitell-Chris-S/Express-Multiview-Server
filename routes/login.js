@@ -45,8 +45,23 @@ router.post('/logout', (req,res) => {
     req.logout();
     req.flash('info', 'You have been logged out')
     res.redirect('/viewer')
-})
+});
 
+router.post('/reset/:id', isAdmin, catchAsync( async (req,res) => {
+    const id = req.params.id
+    console.log(req.body)
+    try{
+        const foundUser = await User.findOne({id})
+        await foundUser.setPassword(req.body.pass)
+        foundUser.save()
+        req.flash('success', "User Password Changed")
+        res.redirect(`/settings/users/${id}`)
+    }
+    catch(err){
+        req.flash('error', "Password Change Failed - ", err.message)
+        res.redirect(`/settings/users/${id}`)
+    }
+}));
 
 
 

@@ -2,6 +2,10 @@
     <div class="flex-row">
     <a class="button ma-1 mb-1 nav-btn" href="/viewer">Viewer</a>
     <a class="button ma-1 mb-1 nav-btn" href="/settings">Settings</a>
+    <% if(currentUser.role == "admin"){ %>
+        <a class="button ma-1 mb-1 nav-btn" href="/login/register">Create New User</a>
+        <a class="button ma-1 mb-1 nav-btn" href="/computers/new">Create New Encoder</a>
+    <% } %>  
     </div>
     <form class="mb-0 flex-row-centered" action="/login/logout" method="POST">
         <%if(currentUser){ %>
