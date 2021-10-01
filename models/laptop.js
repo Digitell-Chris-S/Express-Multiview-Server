@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 const LaptopSchema = new Schema({
     name:{
         type:String,
-        required: true
+        required: true,
+        unique: true
     },
     link:{
         type:String,

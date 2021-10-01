@@ -1,2 +1,11 @@
-<h1>Error: <%= error.status  %></h1>
-<%= error.message  %> 
+<link rel="stylesheet" href="/stylesheets/generic.css">
+<div class="container">
+    <h1 class="center-text">Ooops...</h1>
+    <h4 class="center-text">Looks like somthing went wrong.</h4>
+    <hr />
+    
+    <div>
+        <span><strong>Error:</strong> <%= error.status  %></span>
+        <p><%= error.message  %></p> 
+    </div>
+</div>

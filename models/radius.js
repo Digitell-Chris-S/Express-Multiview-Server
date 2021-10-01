@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const DesktopSchema = new Schema({
+const RadiusSchema = new Schema({
     name:{
         type:String,
         required: true,
@@ -20,6 +20,6 @@ const DesktopSchema = new Schema({
 })
 
 
-const Desktop = mongoose.model('Desktop', DesktopSchema)
+const Radius = mongoose.model('Radius', RadiusSchema)
 
-module.exports = Desktop
+module.exports = Radius

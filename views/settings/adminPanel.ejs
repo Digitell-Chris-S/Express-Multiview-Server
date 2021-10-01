@@ -7,16 +7,19 @@
         <div class="setting-tabs-container mb-1" id="tab-container">
             <a class="tab tab-selected">Desktops</a>
             <a class="tab">Laptops</a>
+            <a class="tab">Enclosures</a>
+            <a class="tab">Radius</a>
             <a class="tab">Users</a>
         </div>
     </article>
     <div class="encoder-container">
+
         <article id="desktops-container" class="encoder-section ma-1 p-1 rounded-1">
             <h3 class="center-text">Desktops</h3>
             <div>
                 <div class="center-text">
                     <label>Filter Desktops</label>
-                    <input type="text" id="desktop-search">
+                    <input type="text" id="desktop-search" placeholder="search...">
                 </div>
             </div>
             <hr />
@@ -26,11 +29,12 @@
                 <% }); %> 
             </div>
         </article>
+
         <article  id="laptops-container" class="encoder-section ma-1 p-1 rounded-1">
             <h3 class="center-text">Laptops</h3>
             <div class="center-text">
                 <label>Filter Laptops</label>
-                <input type="text" id="laptop-search">
+                <input type="text" id="laptop-search" placeholder="search...">
             </div>
             <hr />
             <div class="auto-grid">
@@ -39,6 +43,35 @@
                 <% }); %> 
             </div>
         </article>
+
+        <article id="enclosures-container" class="encoder-section ma-1 p-1 rounded 1">
+            <h3 class="center-text">Enclosures</h3>
+            <div class="center-text">
+                <label>Filter Enclosures</label>
+                <input type="text" id="enclosure-search" placeholder="search...">
+            </div>
+            <hr />
+            <div class="auto-grid">
+                <% enclosures.forEach(comp => { %>
+                    <a class="button enc-btn" href="/settings/enclosures/<%= comp._id %>"><%= comp.name %></a>
+                <% }); %>
+            </div>
+        </article>
+
+        <article id="radius-container" class="encoder-section ma-1 p-1 rounded 1">
+            <h3 class="center-text">Radius</h3>
+            <div class="center-text">
+                <label>Filter Radius</label>
+                <input type="text" id="radius-search" placeholder="search...">
+            </div>
+            <hr />
+            <div class="auto-grid">
+                <% radius.forEach(comp => { %>
+                    <a class="button enc-btn" href="/settings/radius/<%= comp._id %>"><%= comp.name %></a>
+                <% }); %>
+            </div>
+        </article>
+
         <article  id="users-container" class="container encoder-section ma-1 p-1 rounded-1" style="margin:0 auto;">
             <div class="container">
                 <h3 class="center-text">Users</h3>
@@ -54,5 +87,6 @@
                 <% }); %> 
             </div>
         </article>
+        
     </div>
 </section>

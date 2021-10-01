@@ -100,7 +100,7 @@ app.use('/viewer', require('./routes/viewer'));
 app.use('/login', require('./routes/login'));
 app.use('/settings', require('./routes/settings'));
 
-// API Routes
+// API Routes for possible future frontend, used for testing now
 app.use('/computers', require('./routes/computers'));
 
 

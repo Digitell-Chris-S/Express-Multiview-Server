@@ -5,12 +5,16 @@
     <div>
         <h3>Report an Issue</h3>
         <hr>
-        <div class="flex-row">
+        <div class="input-group">
             <label for="name" style="margin-right: 0.5em;">Encoder: </label>
             <input id="name" name="name" value="<%= computer.name %>">
         </div>
-        <div class="flex-row">
-            <label for="email" style="margin-right: 0.5em;">Your Email: </label>
+        <div class="input-group">
+            <label for="username" style="margin-right: 0.5em;">Current User: </label>
+            <input id="username" name="username" value="<%= currentUser.username %>" disabled>
+        </div>
+        <div class="input-group">
+            <label for="email" style="margin-right: 0.5em;">Your Email:</label>
             <input id="email" name="email" value="<%= currentUser.email %>">
         </div>
         <div class="flex-column mb-1">

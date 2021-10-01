@@ -25,6 +25,7 @@ const sendMail = function(type){
                 subject: "MulitViewer: User Reported Issue", // Subject line
                 html: `
                 <h2>Encoder Name: ${req.body.name}</h2>
+                <h3>UserName: ${req.body.username}</h3>
                 <h3>User Contact: ${req.body.email}</h3>
                 <h3>Problem Reported: ${req.body.problem}</h3>
                 <span>User Message: ${req.body.message}</span>

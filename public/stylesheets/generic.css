@@ -23,6 +23,11 @@ fieldset{
 }
 
 /* ----------Containers---------------*/
+.container{
+  width:70%;
+  margin:0 auto;
+}
+
 .error-container{
   text-align: center;
 }
@@ -56,6 +61,14 @@ fieldset{
   border-radius: 1em 0 0 1em;
 }
 
+.input-group{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  margin:1.25em 0em;
+}
+
 /* Buttons */
 .enc-btn{
   margin:.2em;
@@ -74,6 +87,14 @@ fieldset{
 .nav-btn{
   color:#fff;
   background-color: #ff6933;
+}
+
+.warn-btn{
+  color:#fff;
+  background-color: transparent;
+}
+.warn-btn:hover{
+  background-color: #ffc933;
 }
 
 /* inputs */

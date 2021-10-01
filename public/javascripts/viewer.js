@@ -1,3 +1,4 @@
+// until Ping plotter changes the way their live links work there will be no caching of choosen frames
 
 // Selectors (there are unused things in here...probobly)
 
@@ -19,6 +20,7 @@ const viewCont = document.getElementById('view-container');
 const searchbox = document.getElementById('input-search');
 const viewChanger = document.getElementById('view-changer')
 
+
 // Global Variables
 let sidebarExpanded = false;
 let settingsExpanded = false;
@@ -32,8 +34,8 @@ DisplayWindows = (url, id) => {
     let frameContent = `
     <article class="frame-container rounded-1" id="frame-container" data-id="${id}">
         <div class="frame-header">
-            <img id="remove-btn" class="btn remove-btn icon-small" src="icons/delete.svg">
-            <a href="/viewer/report/${id}"><img id="report-btn" class="btn icon-small" src="icons/report.svg" ></a>
+            <button id="remove-btn" class="btn-small grid-center remove-btn cancel-button">Remove</button>
+            <a href="/viewer/report/${id}"><button class="btn-small warn-btn">Report an Issue</button></a>
         </div>
         <iframe src="${url}" frameborder="0" width="${frameSize}" height="600"></iframe>
     </article>`
@@ -47,7 +49,9 @@ DisplayWindows = (url, id) => {
 
 // create a place holder when area is empty
 Placeholder = (element) => {
-    if(element.childElementCount == 0){
+   
+    if(element.children.length === 0){
+        console.log("Add Placeholder")
         element.insertAdjacentHTML('afterbegin', `
         <article class="placeholder p-2 rounded-1 text-center" id="placeholder">
         <img class="icon-med" src="icons/sad.svg">
@@ -56,8 +60,9 @@ Placeholder = (element) => {
         `)
     }
     else{
+        console.log("remove placeholder")
         // Check is placeholder element is actually on the page before trying to remove it
-        if(document.getElementById('placeholder' != null)){
+        if(document.getElementById('placeholder') != null){
             element.removeChild(document.getElementById('placeholder'))
         }
     }
@@ -89,58 +94,17 @@ SetWindowView = (v) => {
         frame.width = frameSize;
     })
 }
-// ------------------------------------
-// loading a window from cache and refreshing the page breaks the ping plotter session
-// Perisitent windows will Probobly not be a thing as long as the public links work like this
-// ------------------------------------
 
-// // Read Local Storage and return value
-// ReadCache = (tag) => {
-//     return localStorage.getItem(tag)
-// }
 
-// Store selected links in Local storage
-// CacheFrames = (link) => {
-//     let storedFrames = ReadCache('frames')
-//     // Check if there are any frames cached and append onto that
-//     if(storedFrames && storedFrames.length){
-//         let oldFrames = JSON.parse(storedFrames)
-//         oldFrames.push(link)
-//         localStorage.setItem('frames', JSON.stringify(oldFrames))
-//     }
-//     // if cache is empty create cache
-//     else{
-//         links = [link]
-//         RenderCachedFrames(links)
-//         localStorage.setItem('frames', JSON.stringify(links))
-//     }
-// }
-
-// Pull links from local storage and render them to the page
-// RenderCachedFrames = (l) => {
-//     if(l && l.length){
-//         l.forEach(link => {
-//             DisplayWindows(l)
-//         })
-//     }
-// }
-
-// 
-// RemoveCachedFrame = (l) => {
-//     const frames = JSON.parse(ReadCache('frames'))
-//     const filtered = frames.filter(f => f != l )
-//     localStorage.setItem('frames', JSON.stringify(filtered))
-// }
-
-// Show Loading Overlay
-// PrettyLoad = () => {
-//    document.querySelector('.overlay').style.display = 'grid'
-//    setTimeout(() => {
-//        document.querySelector('.overlay').style.display = 'none'
-//    }, 2 * 1000)
-// }
-
-// -----------------------------------------------------------------
+// Set Encoder view using encoder view radio boxes
+SetEncoderView = (v) => {
+    // set the value of the encoder view to the default
+    encoderView[0].checked = true
+    // set the value of the view changer to the default
+    viewChanger.value = 'col'
+    // set the size of the frame to the default
+    SetWindowView('col')
+}
 
 // --------------------Event handlers-----------------------------
 // Startup Functions
@@ -149,6 +113,7 @@ window.onload = () => {
     SetWindowView('col')
     // check if main container is empty and show a placeholder 
     Placeholder(windowCont)
+    
 }
 
 // resize all the frame when the user changes the window size
@@ -162,12 +127,13 @@ viewChanger.onchange = (e) => {
 }
 
 // Delete window event listener
+// some parts of this are unused from when active windows were stored in local storage
 windowCont.onclick = (e) => {
     if(e.target.id == "remove-btn"){
        let cont = e.target.parentNode;
-    //This Feels Very gross....why?
+        //This Feels Very gross....why...Has I ever?
        const frame = cont.parentNode.childNodes[3].src;
-        // Remove cached link from storage
+       
        
        windowCont.removeChild(cont.parentNode);
        Placeholder(windowCont);
@@ -182,14 +148,18 @@ windowCont.onclick = (e) => {
     }
 }
 
+
 // menu button for sidebar
 menuBtn.onclick = () => {
     if(settingsExpanded){
         settingPanel.classList.toggle('expanded-height')
+        
     }
     sidebar.classList.toggle('expanded-width')
     if(sidebar.classList.contains('expanded-width')){
         menuBtn.src = "icons/leftArrow.svg"
+        // adjust the window container width to stop overflow
+        windowCont.style.width = "90vw"
         sidebarExpanded = true;
     }
     else{
@@ -243,25 +213,26 @@ searchbox.onkeyup = () => {
         sidebar.style.justifyContent = "start"
     }
     else{
-        sidebar.style.justifyContent = "sapce-around"
+        sidebar.style.justifyContent = "space-around"
     }   
-
-    let laptops = Array.from(laptopEncoderCont.children).forEach(item => {
-        sTerm = item.textContent.toLocaleLowerCase()
-        if(sTerm.includes(searchTerm)){
-            item.style.display = "block"
-        }
-        else{
-            item.style.display = 'none'
-        }
-    })
-    let desktops = Array.from(desktopEncoderCont.children).forEach(item => {
-        sTerm = item.textContent.toLocaleLowerCase()
-        if(sTerm.includes(searchTerm)){
-            item.style.display = "block"
-        }
-        else{
-            item.style.display = 'none'
+    
+    // look through the buttons in each encoder container and hide those that dont match the search term
+    const encContainers = document.querySelectorAll('.encoder-container')
+    Array.from(encContainers).forEach(enc => {
+        const buttons = enc.children
+        Array.from(buttons).forEach(btn => {
+            // Check if the button text matches the search term and hide if it does not
+            if(btn.innerText.toLowerCase().indexOf(searchTerm) == -1){
+                btn.style.display = 'none'
+            }
+            else{
+                btn.style.display = 'block'
+            }
+        })
+        console.log(enc.childNodes)
+        if(enc.children == 0){
+            console.log('hide')
+            enc.parentElement.style.display = 'none'
         }
     })
 }

@@ -41,24 +41,28 @@ router.post('/register', isLoggedIn, isAdmin, sendMail('new_user'), catchAsync( 
     }
 }));
 
+// DeSerialize User
 router.post('/logout', (req,res) => {
     req.logout();
     req.flash('info', 'You have been logged out')
     res.redirect('/viewer')
 });
 
+// Password Reset
 router.post('/reset/:id', isAdmin, catchAsync( async (req,res) => {
-    const id = req.params.id
-    console.log(req.body)
+    const {id} = req.params
     try{
-        const foundUser = await User.findOne({id})
-        await foundUser.setPassword(req.body.pass)
-        foundUser.save()
-        req.flash('success', "User Password Changed")
-        res.redirect(`/settings/users/${id}`)
+        const foundUser = await User.findById({_id: id})
+        console.log(foundUser.username)
+        foundUser.setPassword(req.body.pass, function (){
+            foundUser.save()
+            req.flash('success', `${foundUser.username} Password reset`)
+            res.redirect('/viewer')
+        })
+        
     }
     catch(err){
-        req.flash('error', "Password Change Failed - ", err.message)
+        req.flash('error', "Password Change Failed: ", err.message)
         res.redirect(`/settings/users/${id}`)
     }
 }));
