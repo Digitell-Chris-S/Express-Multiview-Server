@@ -669,5 +669,13 @@
             "name": "Enclosure21",
             "link": "https://pingplotter.cloud/LiveShare/hn6yd6zqb4uw3ypnmam1mmkj6h/7pi7btuu"
         }
+    ],
+    "users": [
+        {
+            "username": "admin",
+            "password": "password",
+            "email": "csampson@digitellinc.com",
+            "role": "admin"
+        }
     ]
 }

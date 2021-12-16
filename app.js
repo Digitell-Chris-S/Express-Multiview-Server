@@ -7,6 +7,7 @@ const ejs = require('ejs');
 const ejsMate = require('ejs-mate');
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
+const config = require('./config');
 
 // Authentication Stuff
 const session = require('express-session')
@@ -17,13 +18,18 @@ const User = require('./models/user')
 // Express instance
 var app = express();
 
-var enviroment = process.env.NODE_ENV
+var enviroment = config.NODE_ENV
+
+
 // ------------Connect To Mongo--------
 const mongoose = require('mongoose');
 const { serializeUser } = require('passport');
 const { env } = require('process');
+// flip database connection based on enviroment
 if(enviroment === "production"){
-  mongoose.connect('mongodb+srv://root:CMhCS6aK2uAvjHcObbt0@multiviewer.haa1z.mongodb.net/multiviewer?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+  // This is the old atlas link - just in case
+  //mongoose.connect('mongodb+srv://root:CMhCS6aK2uAvjHcObbt0@multiviewer.haa1z.mongodb.net/multiviewer?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+  mongoose.connect('mongodb://192.168.0.30:27017/multiviewer', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify:false})
 }
 else{
   mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify:false});
@@ -78,11 +84,16 @@ app.set('view engine', 'ejs');
 app.engine('ejs', ejsMate)
 
 // Middleware
-app.use(logger('dev'));
+app.use(logger(enviroment === 'production' ? 'tiny' : 'dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'))
+
+// ------First Time Setup----------
+const setup = require('./setup');
+app.use(setup);
+
 
 // ------Allow Cross Origin Access Control Header----------------
 app.use(function(req, res, next) {
