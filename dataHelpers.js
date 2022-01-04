@@ -20,45 +20,41 @@ plantSeeds = async () => {
             m.deleteMany({});
         }
 
-        datasets.forEach(set => {
-            set.forEach( (s, index) => {
-                console.log(models[index])
-            })
+        // This is a terrible way to do this, but I ran out of time
+        desktops.forEach(s => {
+        let seed = new Desktop({
+            name:s.name,
+            link:s.link
         })
+        seed.save()
+        })
+        laptops.forEach(s => {
+            let seed = new Laptop({
+                name:s.name,
+                link:s.link
+            })
+            seed.save()
+        })
+        radius.forEach(s => {
+            let seed = new Radius({
+                name:s.name,
+                link:s.link
+            })
+            seed.save()
+        })
+        enclosures.forEach(s => {
+            let seed = new Enclosure({
+                name:s.name,
+                link:s.link
+            })
+            seed.save()
+        })
+        
     }
     catch(err){
         console.log(err);
     }
 
-
-//    desktops.forEach(s => {
-//         let seed = new Desktop({
-//             name:s.name,
-//             link:s.link
-//         })
-//         seed.save()
-//     })
-//     laptops.forEach(s => {
-//         let seed = new Laptop({
-//             name:s.name,
-//             link:s.link
-//         })
-//         seed.save()
-//     })
-//     radius.forEach(s => {
-//         let seed = new Radius({
-//             name:s.name,
-//             link:s.link
-//         })
-//         seed.save()
-//     })
-//     enclosures.forEach(s => {
-//         let seed = new Enclosure({
-//             name:s.name,
-//             link:s.link
-//         })
-//         seed.save()
-//     })
 };
 
 module.exports =  plantSeeds;
